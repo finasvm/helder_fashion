@@ -1,0 +1,93 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}book appointmnet{% endblock %}
+{% block link %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+{% block content %}
+
+<style>
+   
+</style>
+
+
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4></h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                           
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="card-box mb-30">
+                
+            <div class="pb-20">
+                <div class="mt-5"></div>
+
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">username</th>
+                            <th scope="col">Email</th>
+                            <th></th>
+                           
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cus in customers  %}
+                        <tr>
+                            <td>{{cus.username}}</td>
+                            <td>{{cus.email}}</td>
+                            {% if cus.is_active == True %}
+                            <td><a class="btn btn-danger" href="{% url 'blockuser' cus.id %}">block</a></td>
+                            {% else %}
+                            <td><a class="btn btn-success" href="{% url 'blockuser' cus.id %}">unblock</a></td>
+                            {% endif %}
+
+
+                           
+
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </div>
+                
+                      <!-- Simple Datatable End -->
+           
+        </div>
+        
+    </div>
+    
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+    
+    jQuery(document).ready(function($) {
+        $('#example').DataTable();
+    } );
+    </script>
+
+{% endblock %}
+

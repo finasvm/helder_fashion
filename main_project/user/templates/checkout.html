@@ -1,0 +1,267 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+<style>
+input[type=radio] {
+    border: 0px;
+    width: 100%;
+    height: 1em;
+}
+</style>
+    
+        <!-- shopping-cart-area start -->
+        <div class="checkout-area pt-95 pb-70">
+            <div class="container">
+                <h3 class="page-title">Delivery Address</h3>
+                <h4><span style="color: red;" id="error1"></span> </h4>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="checkout-wrapper">
+                            <div id="faq" class="panel-group">    
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a data-toggle="collapse" data-parent="#faq" href="#payment-">Add new address</a></h5>
+                                    </div>
+                                    <div id="payment-" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="billing-information-wrapper">
+                                                <div class="row">
+                                                   <form action="" method="POST">
+                                                      {% csrf_token %} 
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="billing-info">
+                                                            <label>Full name(required)*</label>
+                                                            <input type="text" name="fullname" required>
+
+                                                            <span id="error1"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="billing-info">
+                                                            <label>Pin Code(required)*</label>
+                                                            <input type="text" name="pincode" required>
+                                                            <span id="error2"></span>
+                                                            <span id="error3"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="billing-info">
+                                                            <label>City(required)*</label>
+                                                            <input type="text" name="city" required>
+                                                            <span id="error4"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="billing-info">
+                                                            <label>State(required)*</label>
+                                                            <input type="text" name="state" required>
+                                                            <span id="error5"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="billing-info">
+                                                            <label>House name(required)*</label>
+                                                            <input type="text" name="housename" required>
+                                                            <span id="error6"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6">
+                                                        <div class="billing-info">
+                                                            <label>Land Mark(required)*</label>
+                                                            <input type="text" name="landmark" required>
+                                                            <span id="error7"></span>
+                                                        </div>
+                                                    </div>
+                                                            <div class="billing-btn">
+                                                            <button type="submit" id="but1">submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a data-toggle="collapse" data-parent="#faq" href="#payment-5">you can select the address</a></h5>
+                                    </div>
+                                    {% for message in messages %}
+                                <div class="center">
+                                    <span style="color: red">
+                                        {{message}}
+                                    </span>
+                                </div>
+                                {% endfor %}
+
+                                {% if not address %}
+                                <div id="payment-5" class="panel-collapse collapse">
+                                <div class="col-sm-12 text-center">
+                                <h5>There is no address,please add address</h5>
+                                </div>
+                                </div>
+                                {% elif address_code %}
+
+                                    <div id="payment-5" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="payment-info-wrapper">
+                                                <div class="payment-info">
+                                                    <div class="row">
+                                                         {% for address in address %}
+                                                        <div class="col-lg-6 col-md-6 ">
+                                                            <input type="radio" name="rad" onclick="addressid('{{address.id}}')" checked  >
+                                                             <h3>{{address.Full_name}}</h3>
+                                                             {{address.HouseName}},<br>
+                                                             {{address.landMark}},<br>
+                                                             {{address.city}},<br>
+                                                             {{address.state}}-{{address.pinCode}}  
+                                                         
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% else %}
+
+                                    <div id="payment-5" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="payment-info-wrapper">
+                                                <div class="payment-info">
+                                                    <div class="row">
+                                                         {% for address in address %}
+                                                        <div class="col-lg-6 col-md-6 ">
+                                                            <input type="radio" name="rad" onclick="addressid('{{address.id}}')"   >
+                                                             <h3>{{address.Full_name}}</h3>
+                                                             {{address.HouseName}},<br>
+                                                             {{address.landMark}},<br>
+                                                             {{address.city}},<br>
+                                                             {{address.state}}-{{address.pinCode}}  
+                                                         
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+		
+                                </div>
+                                                                
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a data-toggle="collapse" data-parent="#faq" href="#payment">Payment method</a></h5>
+                                    </div>
+                                    <div id="payment" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="payment-info-wrapper">
+                                                <div class="payment-info">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 ">
+                                                            <div class="col-md-6">
+                                                                <Label class="btn">
+                                                                    <input type="radio" id="razarpay" name="gender" value="stripe" checked >
+                                                                    <span>Stripe</span>
+                                                                </Label>
+                                                            </div>
+                            
+                                                            <div class="col-md-6">
+                                                                <Label class="btn">
+                                                                    <input type="radio" id="cod" name="gender" value="cod">
+                                                                    <span>C O D</span>
+                                                                </Label>
+                                                            </div>
+                                                            
+                                                             
+                                                        </div>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="grand-totall">
+                               
+                                <h5>Grand Total:{{current_usercart.grand_total}}  </h5><br>
+                                
+                                <div class="billing-btn">
+                                    <button type="button" onclick="payment()">Place Order</button>
+                                  </div>
+                                </form>
+                                </div>
+                                </div>
+                                    
+                                
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>       
+                             
+		
+		
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        
+
+    <script>
+        function addressid(id){
+        console.log('jbhchw')
+        $.ajax({
+            url: '/chooseaddress/'+id,
+            method:'GET',
+            success: function (data) {
+            if (data == 'true') {
+            alert("Address added successfully")
+            }
+            
+          }
+        })
+    } 
+    function payment(){
+        console.log('ecehj')
+        var value = $("input[type='radio'][name='gender']:checked").val();
+        var data = {
+            'csrfmiddlewaretoken' : '{{csrf_token}}',
+            'value' : value
+        }
+        console.log('/////////////')
+        $.ajax({
+            url:'/payment/',
+            method:"POST",
+            data:data,
+            dataType:'json',
+            success:function(data){
+                if(data=="true2"){
+                window.location.replace('/codpay/')
+                }
+                else if(data=="true1"){
+                    window.location.replace('/stripepay/')
+                }
+                else if(data=="true"){
+                    window.location.replace('/razarpay/')
+                }
+                else if(data=='false'){
+                    $("#error1").html("please select the address")
+                }
+
+            }
+
+        })
+    }
+ </script>
+
+
+	
+		
+		<!-- all js here -->
+      {% endblock %}

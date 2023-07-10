@@ -1,0 +1,154 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+<style>
+    .center{
+        width: 150px;
+          margin: 40px auto;
+          
+        }
+</style>
+    
+         <!-- shopping-cart-area start -->
+         {% if not current_usercart %}
+         <div class="col-sm-12 text-center">
+         <h5>YOUR CART IS EMPTY</h5>
+         </div>
+         {% else %}
+        <div class="cart-main-area pt-95 pb-100">
+            <div class="container">
+                <h3 class="page-title">Your cart items</h3>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <form action="#">
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>food Name</th>
+                                            <th>Until Price</th>
+                                            <th>Qty</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cart in current_usercart %}    
+                                        <tr>   
+                                            <td class="thumbnail-img">
+                                                <a href="#"><img src="{{cart.products.main_image.url}}" style="height: 10em;width: 10em;"></a>
+                                            </td>
+                                            <td style="text-align: center;" class="name-pr"><a href="#">{{cart.products.name}}</td>
+                                              
+                                            <td style="text-align: center;" class="price-pr"><p>{{cart.products.price}}</p></td>
+                                          
+                                            
+                                            <td style="justify-content: center; padding-left: 3em;" class="qty">
+                                                <form>
+                                               <div>
+                                                <input type="text" name="ff" value="{{cart.products.id}} " hidden>
+                                                <button class="btn btn-primary button" type="button"  onclick="plus('{{cart.id}}')">+</button>
+                                                 <input  class="form-control" type="number" name="count" style="width: 3.90em;" value="{{cart.count}}"  id="count{{cart.id}}" >
+                                                 <button class="btn btn-primary button" type="button" onclick="minus('{{cart.id}}')">-</button>                                       
+                                                </div>
+                                                </form>
+                                           
+                                            <td class="product-remove"><a class="ti-trash" onclick="delclick1('{{cart.id}}')" style="color: red;"></a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                            </div>  
+                            <div class="col-lg-4 col-md-6">
+                                
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="grand-totall">
+                                    <span value="{{grandtotal}}">Subtotal:   {{grandtotal}}</span>
+                                    <h5 value="{{grandtotal}}">Grand Total:  {{grandtotal}}</h5>
+                                    <a href="{% url 'checkout'  %}">Proceed To Checkout</a>
+                                    <p>Checkout with Multiple Addresses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		
+        <script>
+            function plus(id){
+    var val = document.getElementById("count"+id).value;
+    var data = {
+        'action':'plus'
+    }
+    $.ajax({
+        url:'/count/'+ id +'/',
+        method:'GET',
+        data:data,
+        dataType:'json',
+        success:function(data){
+            if(data=='true'){
+                document.getElementById('count'+id).value = parseInt(val) + 1
+                window.location.replace('/usercart/')
+
+            }
+        }
+    })
+    
+}
+function minus(id){
+    var val = document.getElementById("count"+id).value;
+    var data ={
+        'action':'minus'
+    }
+    $.ajax({
+        url:'/count/'+ id +'/',
+        method:'GET',
+        data:data,
+        dataType:'json',
+        success:function(data){
+            if(data=='true'){
+                if(document.getElementById('count'+id).value !== 1) {
+                    document.getElementById('count'+id).value = parseInt(val) -1
+                    window.location.replace('/usercart/')
+                }
+               
+            }
+        }
+    })
+    // document.getElementById('count'+id).value = parseInt(val) - 1
+}
+
+function delclick1(id){
+    var f = confirm('do you realy want to remove this item from your cart?')
+    if (f== true){
+        $.ajax({
+            url:'/cartdelete/'+id+'/',
+            method: 'GET',
+            success:function(data){
+                if (data='true'){
+                    console.log('hoem')
+                 window.location.replace('/usercart/')               
+                }
+            }
+        })
+    }
+}
+
+        </script>
+
+        {% endif %}
+     
+        {% endblock %}

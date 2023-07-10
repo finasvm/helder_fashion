@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Search Results for...{{request.GET.search}}</h3>
+            <hr>
+        </div>
+    </div>
+</div>
+{% if not products %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1>
+                    Oops!</h1>
+                <h2>
+                     Not Found</h2>
+                <div class="error-details">
+                    Sorry, Your searched product is not found
+                </div>
+                <div class="error-actions">
+                    <a href="{% url 'userhome' %}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        Take Me Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }
+</style>
+
+{% else %}
+<div class="product-area pt-95 pb-70 gray-bg">
+    <div class="container">
+        <div class="section-title text-center mb-55">
+            
+        </div>
+        
+        <div class="row">
+            {% for prod in products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                <div class="product-wrapper mb-10">
+                    <div class="product-img">
+                            <img src="{{prod.main_image.url}}" style="width: 25em; height: 15em;">
+                        <div class="product-action">
+                            <a title="Add To Cart" href="{% url 'addcart' prod.id %}">
+                                <i class="ti-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <div class="product-action-wishlist">
+                            <a title="Wishlist" href="#">
+                                <i class="ti-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h4></h4>{{ prod.name }}
+                        <div class="product-price">
+                           
+                            <span class="new">{{prod.price}}</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+            
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

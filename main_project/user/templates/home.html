@@ -1,0 +1,69 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+
+        <div class="product-area pt-95 pb-70 gray-bg">
+            <div class="container">
+                <div class="section-title text-center mb-55">
+                    <h4>Most Populer</h4>
+                    <h2>Recent Products</h2>
+                </div>
+                
+                <div class="row">
+                    {% for prod in products %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <div class="product-wrapper mb-10">
+                            <div class="product-img">
+                                    <img src="{{prod.main_image.url}}" style="width: 25em; height: 15em;">
+                                
+                               
+                                 <div class="product-action">
+                                    <a title="Add To Cart" href="" onclick="addcart('{{prod.id}}')">
+                                           <i class="ti-shopping-cart"></i>
+                                       </a>
+                                       </div>
+                                       
+                                  
+                               
+                                <div class="product-action-wishlist">
+                                    <a title="Wishlist" href="#">
+                                        <i class="ti-heart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h4></h4>{{ prod.name }}
+                                <div class="product-price">
+                                    <span class="new">{{prod.price}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                    
+            </div>
+        </div>
+        
+       
+        
+		
+        <script>
+            function addcart(id){
+            console.log('jbhchw')
+            $.ajax({
+                url: '/addcart/'+id,
+                method:'GET',
+                success: function (data) {
+                if (data == 'true') {
+                alert("Cart added successfully")
+                }
+                
+              }
+            })
+        } 
+		</script>
+		<!-- all js here -->
+
+        {% endblock %}

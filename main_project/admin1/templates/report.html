@@ -1,0 +1,158 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}book appointmnet{% endblock %}
+{% block link %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+{% endblock %}
+{% block content %}
+
+<style>
+
+</style>
+
+
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4></h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                      
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <div>
+                            <form action="/admin1/reports/" method="POST">
+                                {% csrf_token %}
+                                <div>
+                                    <label for="dis">From</label>
+                                <input class="fromdate1"  type="date" onchange="from(event)" name="date1" min="2000-06-01" max="2025-12-01" id="date1"> 
+                            </div>
+                           
+                                <div class="justify-conent-left">
+                                    <label for="dis">To</label>
+                                    <input class="todate1" type="date" name="date2" min="2000-06-01" max="2025-12-01" id="todate"><br>
+                        
+                                </div>
+                               
+                                    <div>
+                                        <button class="btn btn-primary" type="submit" >Search</button>
+                                    </div>
+                                
+    
+                            </form>
+                        
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+            
+            </div>
+            {% if messages %}
+                {% for msg in messages%}
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{msg}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+        
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <h1><strong>{{msg}}</strong></h1>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                
+            <div class="card-box mb-30">
+                
+            <div class="pb-20">
+            
+                <div class="mt-5"> </div>
+
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Price</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in orders  %}
+                        <tr>
+                            <td>{{i.user_order.username}}</td>
+                            <td>{{i.Product.name}}</td>
+                            <td>{{i.address.Full_name}},<br>{{i.address.HouseName}},{{i.address.landMark}},{{i.address.city}},{{i.address.pinCode}}-{{i.address.state}}</td>
+                            <td>{{i.Status}}</td>
+                            <td>{{i.Qty}}</td>
+                            <td>{{i.PaymentMethod}}</td>
+                            <td>{{i.Date}}</td>
+                            <td>{{i.Price}}</td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </div>
+                
+                    <!-- Simple Datatable End -->
+        
+        </div>
+        
+    </div>
+    
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.5/js/buttons.print.min.js"></script>
+
+<script>
+
+jQuery(document).ready(function($) {
+    $('#example').DataTable({
+        dom: "<'row'<'col-sm-6'B><'col-sm-6'f>>" +
+         "<'row'<'col-sm-12'tr>>" +
+         "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        buttons: [
+        { extend: 'csv', className: 'btn btn-light glyphicon glyphicon-save-file' },
+        { extend: 'excel', className: 'btn btn-light glyphicon glyphicon-list-alt' },
+        { extend: 'pdf', className: 'btn btn-light glyphicon glyphicon-file' },
+        ],
+        drawCallback: function () {
+            var hasRows = this.api().rows({ filter: 'applied' }).data().length > 0;
+            $('.buttons-csv')[0].style.visibility = hasRows ? 'visible' : 'hidden'
+            $('.buttons-excel')[0].style.visibility = hasRows ? 'visible' : 'hidden'
+            $('.buttons-pdf')[0].style.visibility = hasRows ? 'visible' : 'hidden'
+        }
+        });
+} );
+</script>
+
+{% endblock %}
+

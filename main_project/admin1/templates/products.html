@@ -1,0 +1,139 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}book appointmnet{% endblock %}
+{% block link %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+{% block content %}
+
+<style>
+
+</style>
+
+
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4></h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                        
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <div>
+                            <a class="btn btn-primary " href="{% url 'addprod' %}" role="button" >
+                            Add Product
+                            </a>
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+            
+            </div>
+            {% if messages %}
+                {% for msg in messages%}
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{msg}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+        
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <h1><strong>{{msg}}</strong></h1>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                
+            <div class="card-box mb-30">
+                
+            <div class="pb-20">
+            
+                <div class="mt-5"> </div>
+
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            <th class="arrow-remove"> </th>
+                            <th class="arrow-remove"> </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products  %}
+                        <tr>
+                            <td>{{product.name}}</td>
+                            <td> <img
+                                src="{{product.main_image.url}}"
+                                height="=150px" width="150px"
+                                alt=""></td>
+                            
+                            <td>{{product.price}}</td>
+                            <td><a href="{% url 'editprod' product.id  %}" class="btn btn-primary">Edit</a></td>
+                            <td><a href="#" onclick="delproduct('{{cart.id}}')" class="btn btn-danger">Delete</a></td>
+
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </div>
+                
+                    <!-- Simple Datatable End -->
+        
+        </div>
+        
+    </div>
+    
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+
+jQuery(document).ready(function($) {
+    $('#example').DataTable();
+} );
+</script>
+
+<script>
+    function delproduct(id){
+    var f = confirm('do you realy want to remove this product?')
+    if (f== true){
+        $.ajax({
+            url:'/admin1/delprod' + id + '/',
+
+            method: 'GET',
+            success:function(data){
+                if (data='true'){
+                    console.log('hoem')
+                 window.location.replace('/admin1/viewprod/')               
+                }
+            }
+        })
+    }
+}
+</script>
+
+
+
+{% endblock %}
+

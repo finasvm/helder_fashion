@@ -1,0 +1,138 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}book appointmnet{% endblock %}
+{% block content %}
+
+<div class="main-container">
+    <div class="pd-ltr-20">
+        
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4  class="card-title">Today's Orders</h4>
+                        <div class="feed-widget">
+                            <ul class="list-style-none feed-body m-0 p-b-20">
+                                    <li class="feed-item">
+                                    <div class="feed-icon bg-info"><i class="ti-shopping-cart"></i></div>order recieved: <b>{{orderstoday}}</b></li>
+                                <li class="feed-item">
+                                    <div class="feed-icon bg-success"><i class="ti-shopping-cart"></i></div>order delivered:  <b>{{ordersdeltoday}}</b></li>
+                                    
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                       <h4 class="card-title">Total Orders</h4>
+                        <div class="feed-widget">
+                            <ul class="list-style-none feed-body m-0 p-b-20">
+                                <li class="feed-item">
+                                    <div class="feed-icon bg-info"><i class="ti-shopping-cart"></i></div>Order Recieved : <b>{{qty}}</b><br></li>
+                                <li class="feed-item">
+                                    <div class="feed-icon bg-success"><i class="ti-shopping-cart"></i></div>Order Delivered : <b>{{qtydelivered}}</b></li>
+                                <li class="feed-item">
+                            </ul>   
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                       <h4 class="card-title">customers</h4>
+                        <div class="feed-widget">
+                            <ul class="list-style-none feed-body m-0 p-b-20">
+                                <li class="feed-item">
+                                    <div class="feed-icon bg-warning"><i class="ti-user"></i></div> Total Customers: <b>{{qtycustomers}}</b></li>
+                                <li class="feed-item">
+                                    <div class="feed-icon bg-success"><i class="ti-money"></i></div>Net Earnings: <b>{{netrevenue}}</b></span></li>
+                            
+                            </ul>   
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4  class="card-title">Earnings</h4>
+                        <div class="feed-widget">
+                            <ul class="list-style-none feed-body m-0 p-b-20">
+                                    
+                                <li class="feed-item">
+                                    <div class="feed-icon bg-success"><i class="ti-money"></i></div>Today's earnings: <b>{{revenuetoday}}</b></li>
+                                    <li class="feed-item">
+                                        <div class="feed-icon bg-success"><i class="ti-money"></i></div>{{currentmonthtext}} earnings: <b>{{revenuemonth}}</b></li>
+                                    <li class="feed-item">
+                                        <div class="feed-icon bg-success"><i class="ti-money"></i></div>{{currentyear}} earnings: <b>{{revenueyear}}</b></li>
+                                    
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    
+        <!-- ============================================================== -->
+        <!-- Sales chart -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Table -->
+        <!-- ============================================================== -->
+        <div class="row">
+        <div class="col-md-6 ml-5">
+
+            <h4>sales</h4>
+
+            <canvas id="myChart1"></canvas>
+            <!-- <script src="https://cdjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js"></script> -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js" integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A==" crossorigin="anonymous"></script>
+
+            <script>
+                var ctx1 = document.getElementById('myChart1')
+                var myChart1 = new Chart(ctx1, {
+
+                    type: 'pie',
+
+                    data : {
+                        labels: [
+                            'Revenue Today ',
+                            'Revenue month',
+                            'Revenue Year ',
+                           
+                            ],
+                        datasets: [{
+                            label: 'My First Dataset',
+
+                            data: [JSON.parse("{{revenuetoday }}"), JSON.parse("{{ revenuemonth }}"),JSON.parse("{{ revenueyear }}"),],
+
+                            backgroundColor: [
+                            'rgb(0, 191, 255)',
+                            'rgb(191, 255, 0)',
+                            'rgb(255, 77, 77)',
+                            'rgb(128, 0, 255)',
+
+                            ],
+                            hoverOffset: 2
+
+                        }]
+                        
+                    }
+                });
+            </script>
+        </div>
+           
+   </div>
+          
+       
+       
+    </div>
+</div>
+
+{% endblock %}

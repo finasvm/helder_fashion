@@ -1,0 +1,168 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}book appointmnet{% endblock %}
+{% block link %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+{% block content %}
+
+<style>
+
+</style>
+
+
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4></h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                        
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <div>
+                            
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+            
+            </div>
+            {% if messages %}
+                {% for msg in messages%}
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{msg}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+        
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <h1><strong>{{msg}}</strong></h1>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                
+            <div class="card-box mb-30">
+                
+            <div class="pb-20">
+            
+                <div class="mt-5"> </div>
+
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Edit status</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in order  %}
+                        <tr>
+                            <td>{{i.user_order.username}}</td>
+                            <td>{{i.Product.name}}</td>
+                            <td>{{i.address.HouseName}}{{i.address.landMark}},{{i.address.city}}<br>{{i.address.pinCode}}-{{i.address.state}}</td>
+                            <td>{{i.Status}}</td>
+                            <td>{{i.Qty}}</td>
+                            <td>{{i.PaymentMethod}}</td>
+                            <td>{{i.Date}}</td>
+                            <td>{{i.Price}}</td>
+                            {% if i.Status == 'cancelled' %}
+                            <td style="color: red;">
+                                 {{i.Status}}
+                            </td>
+                            {% elif i.Status == 'delivered'  %}
+                            <td style="color: green;">
+                                {{i.Status}}
+                            </td>
+                            {% else %}
+                            <td>
+                                {% if i.Status == 'ordered' %}
+                                <button class="btn btn-primary status" type="button" data-list={{i.id}} value="ship">SHIP</button>
+                                 {% elif i.Status == 'shipped' %}
+                                 <button class="btn btn-primary status" type="button" data-list={{i.id}} value='deliver'>DELIVER</button>
+                                 {% endif %}
+                            </td>
+                            {% endif %}
+
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </div>
+                
+                    <!-- Simple Datatable End -->
+        
+        </div>
+        
+    </div>
+    
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+
+jQuery(document).ready(function($) {
+    $('#example').DataTable();
+} );
+</script>
+
+<script>
+
+    $(".status").click(function() {
+        var val  =$(this).val();
+        var f = confirm('Do you really want to ' + val + ' the item ?' );
+               if (f== true){
+        var id1 = $(this).attr("data-list");
+        console.log(id1)
+       
+        console.log(val)
+        var data = {
+        'csrfmiddlewaretoken' : '{{csrf_token}}',
+        'Value' : val,
+        'id1':id1
+
+        }
+        $.ajax({
+            url:'/admin1/orderchange/',
+            method:'POST',
+            data: data,
+            dataType:'json',
+            success:function(data){
+                if (data =="true"){
+                    window.location.replace('/admin1/vieworder/')
+                
+                }
+            }
+        })
+    }
+    })
+</script>
+
+{% endblock %}
+

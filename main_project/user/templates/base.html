@@ -1,0 +1,236 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+    
+<!-- Mirrored from demo.hasthemes.com/marten-preview/marten-v1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Mar 2021 01:23:07 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>AL-HAIR RESTAURANT</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon -->
+
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'user2/assets/img/favicon.png' %}">
+		
+		<!-- all css here -->
+        <link rel="stylesheet" href="{% static 'user2/assets/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/simple-line-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/meanmenu.min.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'user2/assets/css/responsive.css' %}">
+        <script src="{% static 'user2/assets/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+    </head>
+    <body>
+        <style>
+
+
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #7E4C4E;
+  border-right: none;
+  padding: 5px;
+  height: 30px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #7E4C4E;
+}
+
+.searchTerm:focus{
+  color: #7E4C4E;
+}
+
+.searchButton {
+  width: 40px;
+  height: 30px;
+  border: 1px solid #7E4C4E;
+  background: #7E4C4E;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+        </style>
+        <header class="header-area">
+            <div class="header-top theme-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="welcome-area">
+                               
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-8 col-md-8 col-12">
+                            <div class="account-curr-lang-wrap f-right">
+                                <ul>
+                                   
+                                        <ul>
+                                           
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if message %}
+            <h4 style="color: green;text-align: center;">Hello {{user.username}},{{message}}</h4>  
+            {% else %}
+            <p></p>
+            {% endif %}
+            <div class="header-bottom transparent-bar">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-5">
+                            <div class="logo pt-39">
+                                <h4 style="text-decoration:brown ;"><a href="{% url 'userhome' %}" >HELDER-FASHION</a></h4>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10 d-none d-lg-block">
+                            <div class="main-menu text-center">
+                                <nav>
+                                    <ul>
+                                       
+                                        
+                                        <li><a href="{% url 'userhome' %}" >HOME
+                                        </a></li>
+                                        <li class="mega-menu-position">
+                                            
+                                        </li>
+                                       
+                                        
+                                            <li class="mega-menu-position">
+                                                
+                                                    <form action="{% url 'usersearch' %}" method="get">
+                                                       
+                                                    <div  class="search">
+                                                       <input type="text" class="searchTerm" placeholder="What are you looking for?" name="search">
+                                                       <button type="submit" class="searchButton">
+                                                         <i class="ti-search"></i>
+                                                      </button>
+                                                    </form>
+                                                    </div>
+                                                
+                                            </li>
+                                                
+                                        
+                                     
+                                        
+                                       
+                                        
+                                        
+                                      
+                                           
+                                   
+                                        <!-- <div class="header-login same-style"> -->
+                                        
+                                        <LI><a href="{% url 'userprofile' %}">PROFILE</a></LI>
+                                        <li><a href="{% url 'logout' %}"><b> Logout</b></a></li>
+
+                                       
+                                        
+                                        <!-- </div> -->
+                                         <div class="header-cart same-style">
+                                            <button class="icon-cart">
+                                                <a href="{% url 'usercart' %}"><i class="icon-handbag"> <span class="count-style">{{cartcount.count}}</span></i></a>
+                                               
+                                            </button>
+                                        </div> 
+                                        
+
+                                    </ul>
+                                </nav>
+                        
+                            </div>
+                        </div>
+                       
+                        
+                        <div class="mobile-menu-area electro-menu d-md-block col-md-12 col-lg-12 col-12 d-lg-none d-xl-none">
+                            <div class="mobile-menu">
+                                <nav id="mobile-menu-active">
+                                    <ul class="menu-overflow">
+                                        <li><a href="{% url 'userhome' %}" >HOME</a>
+                                            <ul>
+                                            </ul>
+                                        </li>
+                                        
+                                        
+                                        <li><a href="#">Search</a>
+                                            <ul>
+                                                <li>
+                                                  
+                                                        <form action="{% url 'usersearch' %}" method="post">
+                                                            {% csrf_token %}
+                                                        <div class="search">
+                                                           <input type="text" class="searchTerm" placeholder="What are you looking for?" style=" height: 18px;" name="search">
+                                                           <button type="submit" class="searchButton">
+                                                              <i class="ti-search"></i>
+                                                           </button>
+                                                         </form>
+                                                        </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                       
+                                        <li><a href="">MY PROFILE</a></li>
+                                        <li><a href="{% url 'logout' %}"><b> Logout</b></a></li>
+                                        <li>
+                                            <a href="{% url 'usercart' %}"><i class="icon-handbag"> <span class="count-style"></span></i></a>
+                                           
+                                        </li>
+                                    </ul>
+                                </nav>
+                                               
+                            </div>
+                       </div>    
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+                {% block content%}
+		
+		
+		        {% endblock %}
+		<!-- all js here -->
+        <script src="{% static 'user2/assets/js/vendor/jquery-1.12.0.min.js' %}"></script>
+        <script src="{% static 'user2/assets/js/popper.js' %}"></script>
+        <script src="{% static 'user2/assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'user2/assets/js/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'user2/assets/js/waypoints.min.js' %}"></script>
+        <script src="{% static 'user2/assets/js/elevetezoom.js' %}"></script>
+        <script src="{% static 'user2/assets/js/ajax-mail.js' %}"></script>
+        <script src="{% static 'user2/assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'user2/assets/js/plugins.js' %}"></script>
+        <script src="{% static 'user2/assets/js/main.js' %}"></script>
+    </body>
+
+</html>
