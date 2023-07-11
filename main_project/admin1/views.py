@@ -157,7 +157,7 @@ class AddProduct(CreateView):
     model=Products
     form_class=ProductForm
     template_name='addproduct.html'
-    success_url=reverse_lazy('dash')
+    success_url=reverse_lazy('viewprod')
 
     def form_valid(self, form):
             form.instance.user=self.request.user
@@ -170,7 +170,7 @@ class EditProd(UpdateView):
     template_name='editproduct.html'
     form_class=ProductForm
     model=Products
-    success_url=reverse_lazy('dash')
+    success_url=reverse_lazy('viewprod')
     pk_url_kwarg='id'
 
     def form_valid(self, form):
@@ -182,7 +182,7 @@ class DelProd(View):
     def get(self,request,id):
         prod = Products.objects.get(id=id)
         prod.delete()
-        return JsonResponse('true',safe=False)
+        return redirect('viewprod')
 
 @method_decorator(SignInRequired,name='dispatch')
 class ViewOrders(View):   

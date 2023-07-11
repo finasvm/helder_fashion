@@ -83,7 +83,7 @@
                             
                             <td>{{product.price}}</td>
                             <td><a href="{% url 'editprod' product.id  %}" class="btn btn-primary">Edit</a></td>
-                            <td><a href="#" onclick="delproduct('{{cart.id}}')" class="btn btn-danger">Delete</a></td>
+                            <td><a href="{% url 'delprod' product.id  %}"  class="btn btn-danger">Delete</a></td>
 
                             
                         </tr>

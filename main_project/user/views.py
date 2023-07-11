@@ -30,11 +30,8 @@ class Login(View):
             return render(request,'login.html')
     def post(self,request):
         username = request.POST.get('username')
-        print(username)
         password = request.POST.get('password')
-        print(password)
         user=authenticate(request,username=username,password=password)
-        print(user)
         if user:
            login(request,user)
            print(user.username)
@@ -42,7 +39,7 @@ class Login(View):
            url = reverse('userhome')  # Replace 'userhome' with your actual URL pattern name
            url_with_message = url + '?message=' + message
            return redirect(url_with_message)
-        
+       
         else:
            messages.error(request,'username and password is wrong')
            return redirect('userlogin')

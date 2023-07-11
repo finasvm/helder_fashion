@@ -339,7 +339,11 @@
                                                                 <tr>
                                                                     <td><a href="">{{i.Product.name}}</td></a>  
                                                                     <td>{{i.address.Full_name}},{{i.address.HouseName}},{{i.address.landMark}},{{i.address.city}},{{i.address.pinCode}}-{{i.address.state}}</td>
+                                                                    {% if i.Status == 'cancelled' %}
+                                                                    <td><b style="color: red;">{{i.Status}}</b></td>
+                                                                    {% else %}
                                                                     <td><b style="color: green;">{{i.Status}}</b></td>
+                                                                    {% endif %}
                                                                     <td>{{i.Qty}}</td>
                                                                     <td>{{i.PaymentMethod}}</td>
                                                                     <td>{{i.Date}}</td>
