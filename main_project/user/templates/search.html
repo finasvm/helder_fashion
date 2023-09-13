@@ -52,16 +52,12 @@
                 <div class="product-wrapper mb-10">
                     <div class="product-img">
                             <img src="{{prod.main_image.url}}" style="width: 25em; height: 15em;">
-                        <div class="product-action">
-                            <a title="Add To Cart" href="{% url 'addcart' prod.id %}">
-                                <i class="ti-shopping-cart"></i>
-                            </a>
-                        </div>
-                        <div class="product-action-wishlist">
-                            <a title="Wishlist" href="#">
-                                <i class="ti-heart"></i>
-                            </a>
-                        </div>
+                            <div class="product-action">
+                                <a title="Add To Cart" href="" onclick="addcart('{{prod.id}}')">
+                                       <i class="ti-shopping-cart"></i>
+                                   </a>
+                            </div>
+                        
                     </div>
                     <div class="product-content">
                         <h4></h4>{{ prod.name }}
@@ -80,5 +76,21 @@
     </div>
 </div>
 {% endif %}
+<script>
+    function addcart(id){
+    console.log('jbhchw')
+    $.ajax({
+        url: '/addcart/'+id,
+        method:'GET',
+        success: function (data) {
+        if (data == 'true') {
+        alert("Cart added successfully")
+        }
+        
+      }
+    })
+} 
+</script>
+<!-- all js here -->
 
 {% endblock %}

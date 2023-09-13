@@ -214,8 +214,11 @@ class UserCart(LoginRequiredMixin,View):
         current_usercart = Cart.objects.filter(user=current_user)
         grandtotal=0
         for j in current_usercart:
+            total=0
             product2 = Products.objects.get(id=j.products.id)             
-            grandtotal = grandtotal + float(product2.price)*j.count
+            total = float(product2.price)*j.count
+            Cart.objects.filter(id=j.id).update(Total=total)
+            grandtotal = grandtotal+float(product2.price)*j.count
             print(grandtotal)
         current_usercart.update(grand_total=grandtotal)
         context = {'current_usercart':current_usercart ,'grandtotal':grandtotal,'cartcount':current_usercart}
